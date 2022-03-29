@@ -2,6 +2,10 @@ import linie_tray as lt
 import kola_tray as kt
 import cv2 as cv
 
+img = cv.imread('tray7.jpg', cv.IMREAD_COLOR)
+cimg = cv.imread('tray7.jpg', 0)
+# gray = cv.imread('tray1.jpg', cv.IMREAD_GRAYSCALE)
+
 def detect_coins_on_tray(tacka, kaska):
   result = []
   # print(kaska[0][0])
@@ -13,37 +17,27 @@ def detect_coins_on_tray(tacka, kaska):
 
 
 if __name__ == '__main__':
-  img = cv.imread('tray3.jpg', cv.IMREAD_COLOR)
-  cimg = cv.cvtColor(img,cv.COLOR_GRAY2BGR)
+  # cv.imshow('detected circles',cimg)
 
   lines = lt.get_lines(img)
-  circles = kt.get_circles(img)
+  circles = kt.get_circles(cimg)
+
+  # print(lines)
+  # print(circles)
 
   tray = lt.get_maxes(lines)
+  # print(tray)
   # coins = kt.get_circles_centers(circles)
   coins_on_tray = detect_coins_on_tray(tray, circles)
-
-  print(coins_on_tray)
   
-  img = lt.draw_lines(cimg, lines)
-  img = kt.draw_circles(cimg, coins_on_tray)
+  print(coins_on_tray, sep='\n')
+  
+  lt.draw_lines(img, lines)
+  kt.draw_circles(img, coins_on_tray)
 
-  # print(coins)
-  # print(circles)
-  cv.imshow('detected circles',cimg)
+  # print(str(len(coins_on_tray))+' <---Number of coins')
+  cv.imshow(str(len(coins_on_tray))+' <---Number of coins',img)
   cv.waitKey(0)
   cv.destroyAllWindows()
-  # print(kt.get_circles(img))
-  # print(kt.get_circles_centers(circles))
-  
-  # p00 = [x_min, y_min]
-  # p10 = [x_max, y_min]
-  # p01 = [x_min, y_max]
-  # p11 = [x_max, y_max]
-  # tray = [x_max, x_min, y_max, y_min]
-  # tray = [p00, p10, p01, p11]
-  # print(detect_coins_on_tray(tray, coins))
-
-
 
 

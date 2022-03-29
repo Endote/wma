@@ -10,7 +10,6 @@ import numpy as np
 # https://stackoverflow.com/questions/66569066/how-do-i-optimize-line-detection-for-different-images
 
 
-img = cv.imread('tray3.jpg', cv.IMREAD_COLOR)  
 
 
 def get_maxes(lines):
@@ -45,29 +44,31 @@ def get_maxes(lines):
     return [x_max, x_min, y_max, y_min]
 
 
-def get_lines(img):
+def get_lines(obraz):
     
-    gray = cv.cvtColor(img,cv.COLOR_BGR2GRAY)
+    gray = cv.cvtColor(obraz,cv.COLOR_BGR2GRAY)
 
-    blur = cv.GaussianBlur(gray,(5,5),20)
+    blur = cv.GaussianBlur(gray,(5,5),2)
 
     edges = cv.Canny(gray,1,5000,apertureSize = 5)
 #lies = cv.HoughLinesP(edges,rho = 1, theta = 1*np.pi/180,treshold = 100, minLineLength=50, maxLineGap=6.5)
-    return cv.HoughLinesP(edges,rho = 1, theta = 1*np.pi/180, threshold = 120,  maxLineGap=400)
+    return cv.HoughLinesP(edges,rho = 1, theta = 1*np.pi/180, threshold = 150,  maxLineGap=150)
 
-def draw_lines(img, lines):
+def draw_lines(obraz, lines):
     for line in lines:
         x1, y1, x2, y2 = line[0]
-        img = cv.line(img,(x1,y1),(x2,y2),(0,255,0),2)
-    return img
+        obraz = cv.line(obraz,(x1,y1),(x2,y2),(0,255,0),2)
+    return obraz
 
 
 
-if __name__ == '__main__':
-    lines = get_lines(img)
+# if __name__ == '__main__':
+    # img = cv.imread('tray3.jpg', cv.IMREAD_COLOR)  
+
+    # lines = get_lines(img)
 
 
-    x_max, x_min, y_max, y_min = get_maxes(lines)
+    # x_max, x_min, y_max, y_min = get_maxes(lines)
 
 
     # for line in lines:
@@ -101,11 +102,11 @@ if __name__ == '__main__':
 
 
     #     cv.line(img,(x1,y1),(x2,y2),(0,255,0),2)
-    draw_lines(img, lines)
-    cv.imshow("Linie", img)
-    # print(str(x_max)+' '+str(x_min))
-    print(get_maxes(lines))
-    k = cv.waitKey(0)
+    # draw_lines(img, lines)
+    # cv.imshow("Linie", img)
+    # # print(str(x_max)+' '+str(x_min))
+    # print(get_maxes(lines))
+    # k = cv.waitKey(0)
 
 
 
