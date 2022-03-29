@@ -1,5 +1,4 @@
 from cmath import inf
-from tkinter.tix import INTEGER
 import cv2 as cv
 import numpy as np
 
@@ -11,6 +10,7 @@ import numpy as np
 # https://stackoverflow.com/questions/66569066/how-do-i-optimize-line-detection-for-different-images
 
 
+img = cv.imread('tray3.jpg', cv.IMREAD_COLOR)  
 
 
 def get_maxes(lines):
@@ -19,7 +19,7 @@ def get_maxes(lines):
     y_max = -float(inf)
     y_min = float(inf)
     for line in lines:
-        print(line)
+        # print(line)
         x1,y1,x2,y2 = line[0]
         if(x1 > x_max or x2 > x_max):
             if(x1 > x2):
@@ -64,7 +64,6 @@ def draw_lines(img, lines):
 
 
 if __name__ == '__main__':
-    img = cv.imread('tray3.jpg', cv.IMREAD_COLOR)  
     lines = get_lines(img)
 
 
